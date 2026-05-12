@@ -1,0 +1,50 @@
+RERUN GUIDE — Models that need a different delta
+================================================================================
+Run ONLY these. Everything else is already good enough.
+Set the suggested delta in Cell 3 (TUBE_DELTA) of the relevant notebook.
+Quantile models don't have delta — use different q values as shown.
+
+Location           Model                          Current PICP   Action    Suggested Delta/q
+-----------------------------------------------------------------------------------------------
+Andaman_Sea        LSTM-Quantile                          83.9%    widen  q_lo=0.05, q_hi=0.95
+Arabian_Sea        DeepAR-NLL-Gaussian                    98.3%   narrow  q_lo=0.15, q_hi=0.85
+Arabian_Sea        GRU-Quantile                           99.6%   narrow  q_lo=0.15, q_hi=0.85
+Arabian_Sea        GRU-Tube                               99.5%   narrow           delta=0.150
+Arabian_Sea        SimpleRNN-Quantile                     98.6%   narrow  q_lo=0.15, q_hi=0.85
+Bay_of_Bengal      DeepAR-NLL-Gaussian                    99.2%   narrow  q_lo=0.15, q_hi=0.85
+Lakshadweep        DeepAR-NLL-Gaussian                    87.1%    widen  q_lo=0.05, q_hi=0.95
+Lakshadweep        SimpleRNN-Quantile                     98.1%   narrow  q_lo=0.15, q_hi=0.85
+Lakshadweep        SimpleRNN-Tube                         99.8%   narrow           delta=0.150
+South_IO           GRU-Quantile                           98.4%   narrow  q_lo=0.15, q_hi=0.85
+South_IO           GRU-Tube                               98.3%   narrow           delta=0.150
+South_IO           SimpleRNN-Tube                         99.5%   narrow           delta=0.150
+
+SKIP ENTIRELY (Mamba, Transformer — model architecture is the issue, not delta):
+  These models are not well-suited for SEQ_LEN=30 with 846 train seqs.
+  Include them in results tables but note their limitations.
+  Reference: Zeng et al. (2023) 'Are Transformers Effective for Time Series Forecasting?'
+
+MODELS ALREADY OK (PICP in [92%, 98%]) — DO NOT RERUN:
+  Andaman_Sea        DeepAR-NLL-Gaussian          PICP=95.6% ✓
+  Andaman_Sea        GRU-Quantile                 PICP=93.1% ✓
+  Andaman_Sea        GRU-Tube                     PICP=95.2% ✓
+  Andaman_Sea        LSTM-Tube                    PICP=94.6% ✓
+  Andaman_Sea        SimpleRNN-Quantile           PICP=95.2% ✓
+  Andaman_Sea        SimpleRNN-Tube               PICP=97.2% ✓
+  Arabian_Sea        LSTM-Quantile                PICP=94.9% ✓
+  Arabian_Sea        LSTM-Tube                    PICP=96.0% ✓
+  Arabian_Sea        SimpleRNN-Tube               PICP=97.9% ✓
+  Bay_of_Bengal      GRU-Quantile                 PICP=95.1% ✓
+  Bay_of_Bengal      GRU-Tube                     PICP=96.7% ✓
+  Bay_of_Bengal      LSTM-Quantile                PICP=92.3% ✓
+  Bay_of_Bengal      LSTM-Tube                    PICP=95.1% ✓
+  Bay_of_Bengal      SimpleRNN-Quantile           PICP=95.9% ✓
+  Bay_of_Bengal      SimpleRNN-Tube               PICP=98.0% ✓
+  Lakshadweep        GRU-Quantile                 PICP=97.6% ✓
+  Lakshadweep        GRU-Tube                     PICP=97.2% ✓
+  Lakshadweep        LSTM-Quantile                PICP=92.2% ✓
+  Lakshadweep        LSTM-Tube                    PICP=97.6% ✓
+  South_IO           DeepAR-NLL-Gaussian          PICP=97.2% ✓
+  South_IO           LSTM-Quantile                PICP=94.3% ✓
+  South_IO           LSTM-Tube                    PICP=96.0% ✓
+  South_IO           SimpleRNN-Quantile           PICP=97.4% ✓
